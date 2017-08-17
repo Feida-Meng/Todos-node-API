@@ -1,20 +1,6 @@
 var { mongoose } = require('./db/mongoose');
 
-var Todo = mongoose.model('Todo', {
-  text: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  completed: {
-    type: Boolean,
-    default: false
-  },
-  completedAt: {
-    type: Number,
-    default: null
-  }
-});
+
 
 
 var User = mongoose.model('User',{

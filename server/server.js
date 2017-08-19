@@ -41,7 +41,7 @@ app.get('/todos/:id',(req,resp) => {
     if (!todo) {
       return resp.status(404).send('Unable to find todo id');
     }
-    resp.send(todo);
+    resp.send({todo});
   }).catch((err) => {
     resp.status(400).send(err);
   });

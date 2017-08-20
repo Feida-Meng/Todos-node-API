@@ -1,11 +1,55 @@
-var mongoose = require('mongoose');
-var User = mongoose.model('User',{
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 5
-  }
+const mongoose = require('mongoose');
+const validator = require('validator');
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
+
+var UserSchema = new mongoose.Schema({
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 5,
+      unique: true,
+      isAsync: false,
+      validate: {
+        validator: validator.isEmail,
+      },
+      message: '{VALUE} is not a valid email'
+
+    },
+    password:{
+      type: String,
+      require: true,
+      minlength: 6
+    },
+    tokens: [{
+      access: {
+        type: String,
+        require: true
+      },
+      token: {
+        type: String,
+        require: true
+      }
+    }]
 });
+
+UserSchema.methods.toJSON = function () {
+  var user = this;
+  var userObject = user.toObject();
+  return _.pick(userObject,['_id','email']);
+}
+
+UserSchema.methods.generateAuthToken = function() {
+  var user = this;
+  var access = 'auth';
+  var token = jwt.sign({_id: user._id.toHexString(), access},'asdfaf').toString();
+  console.log('token:!!!!!!!!!!!!!!!! ',token);
+  user.tokens.push({access, token});
+  return user.save().then(() => {
+    return token;
+  });
+};// arrow function doesnt bind this
+var User = mongoose.model('User',UserSchema);
 
 module.exports = { User };

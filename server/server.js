@@ -15,24 +15,24 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 
 //get all todos
-app.get('/todos',(req,res) => {
+app.get('/todos',(req,resp) => {
   Todo.find().then((todos) => {
-    res.send({todos});
+    resp.send({todos});
   },(err) => {
-    res.status(400).send();
+    resp.status(400).send();
   });
 });
 
 //create new todo(s)
-app.post('/todos/new',(req, res) => {
+app.post('/todos/new',(req, resp) => {
   var todo = new Todo({
     text: req.body.text
   });
 
   todo.save().then((doc) => {
-    res.send(doc);
+    resp.send(doc);
   }, (err) => {
-    res.status(400).send();
+    resp.status(400).send();
   });
 
 });
@@ -78,7 +78,7 @@ app.patch('/todos/:id',(req,resp) => {
     }
 
     resp.status(200).send({todo});
-  }).catch((e) => {
+  }).catch((err) => {
     resp.status(400).send();
   });
 
@@ -103,6 +103,29 @@ app.delete('/todos/:id',(req, resp) => {
 
 });
 
+//-------------Todo--/\-----User-\/-------------------
+
+//New user
+app.post('/users/new', (req,resp) => {
+  var body = _.pick(req.body, ['email','password']);
+  var user = new User(body);
+  console.log('user1: ', user);
+  user.save().then((user) => {
+    console.log('user2: ', user);
+    return user.generateAuthToken();
+  }).then(( token) => {
+    console.log('user3: ', user);
+    resp.status(200).header('x-auth',token).send(user);
+  }).catch((err) => {
+    resp.status(400).send(err);
+  });
+});
+
+
+
+
+
+//--------------------User-/\----------------------------
 app.listen(port, () => {
   console.log(`Started on port ${port}`);
 });

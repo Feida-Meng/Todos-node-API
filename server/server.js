@@ -8,11 +8,16 @@ var { ObjectID } = require('mongodb');
 var { mongoose } = require('./db/mongoose');
 var { Todo } = require('./models/todo');
 var { User } = require('./models/user');
+var { authenticate } = require('./middleware/authenticate');
 
 var app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
+
+app.get('/users/me',authenticate,(req, resp) => {
+  resp.send(req.user);
+});
 
 //get all todos
 app.get('/todos',(req,resp) => {
@@ -122,10 +127,10 @@ app.post('/users/new', (req,resp) => {
 });
 
 
-
-
-
 //--------------------User-/\----------------------------
+
+
+
 app.listen(port, () => {
   console.log(`Started on port ${port}`);
 });

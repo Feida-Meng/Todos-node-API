@@ -125,6 +125,19 @@ app.post('/users/new', (req,resp) => {
   });
 });
 
+//--------------------User login-------------------------
+app.post('/users/login', (req, resp) => {
+  var body = _.pick(req.body, ['email','password']);
+  var user = new User(body);
+
+  User.findByLogin(body.email, body.password).then((user) => {
+    return user.generateAuthToken().then((token) => {
+      resp.header('x-auth',token).send(user);
+    })
+  }).catch((e) => {
+    resp.status(400).send();
+  });
+})
 
 //--------------------User-/\----------------------------
 

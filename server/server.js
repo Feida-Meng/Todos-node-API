@@ -15,7 +15,7 @@ const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
-app.get('/users/me',authenticate,(req, resp) => {
+app.get('/users/currentuser',authenticate,(req, resp) => {
   resp.send(req.user);
 });
 

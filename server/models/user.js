@@ -11,8 +11,8 @@ var UserSchema = new mongoose.Schema({
       trim: true,
       minlength: 5,
       unique: true,
-      isAsync: false,
       validate: {
+        isAsync: false,
         validator: validator.isEmail,
       },
       message: '{VALUE} is not a valid email'
@@ -84,7 +84,6 @@ UserSchema.pre('save', function(next) {
     next();
   }
 });
-
 
 var User = mongoose.model('User', UserSchema);
 module.exports = { User };

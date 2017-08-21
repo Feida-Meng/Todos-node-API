@@ -1,40 +1,21 @@
-// var { User } = require('./../models/user');
-//
-// var authenticate = (req, resp, next) => {
-//   var token = req.header('x-auth');
-//
-//   User.findByToken(token).then((user) => {
-//     if(!user) {
-//       return Promise.reject();
-//     }
-//
-//     req.user = user;
-//     req.token = token;
-//     next();
-//
-//   }).catch((e) => {
-//     resp.status(401).send(); //401 authentication is required
-//   });
-//
-// };
-//
-// module.exports = { authenticate };
-var {User} = require('./../models/user');
+var { User } = require('./../models/user');
 
-var authenticate = (req, res, next) => {
+var authenticate = (req, resp, next) => {
   var token = req.header('x-auth');
 
   User.findByToken(token).then((user) => {
-    if (!user) {
+    if(!user) {
       return Promise.reject();
     }
 
     req.user = user;
     req.token = token;
     next();
+
   }).catch((e) => {
-    res.status(401).send();
+    resp.status(401).send(); //401 authentication is required
   });
+
 };
 
-module.exports = {authenticate};
+module.exports = { authenticate };

@@ -89,7 +89,6 @@ app.patch('/todos/:id',(req,resp) => {
 
 });
 
-
 //remove a single todos
 app.delete('/todos/:id',(req, resp) => {
   var id = req.params.id
@@ -128,7 +127,6 @@ app.post('/users/new', (req,resp) => {
 
 
 //--------------------User-/\----------------------------
-
 
 
 app.listen(port, () => {

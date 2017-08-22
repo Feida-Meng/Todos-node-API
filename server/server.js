@@ -139,6 +139,17 @@ app.post('/users/login', (req, resp) => {
   });
 })
 
+//-------------------User logout----------------------
+app.delete('/users/currentuser/logout',authenticate, (req, resp) => {
+  req.user.removeToken(req.token).then(() => {
+    console.log('req-------------',req.route.Route);
+    console.log('req-------------');
+    resp.status(200).send();
+  },() => {
+    resp.status(400).send();
+  });
+});
+//-------------------User logout----------------------
 //--------------------User-/\----------------------------
 
 

@@ -305,3 +305,26 @@ describe('POST /users/login',() => {
   });
 
 });
+
+
+describe('DELETE /users/currentuser/logout', () => {
+  it('should logout user',(done) => {
+    request(app)
+      .delete('/users/currentuser/logout')
+      .set('x-auth',users[0].tokens[0].token)
+      .expect(200)
+      // .expect((resp) => {
+      //
+      // })
+      .end((err,resp) => {
+        if(err) {
+          return done(err)
+        }
+
+        User.findById(users[0]._id).then((user) => {
+          expect(user.tokens.length).toBe(0);
+          done();
+        }).catch((e) => done(e));
+      })
+  })
+});

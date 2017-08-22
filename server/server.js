@@ -109,7 +109,7 @@ app.delete('/todos/:id',(req, resp) => {
 
 //-------------Todo--/\-----User-\/-------------------
 
-//New user
+//-------------New user-------------------------------
 app.post('/users/new', (req,resp) => {
   var body = _.pick(req.body, ['email','password']);
   var user = new User(body);
@@ -124,8 +124,9 @@ app.post('/users/new', (req,resp) => {
     resp.status(400).send(err);
   });
 });
+//-------------New user----------------------------------
 
-//--------------------User login-------------------------
+//--------------------user login-------------------------
 app.post('/users/login', (req, resp) => {
   var body = _.pick(req.body, ['email','password']);
   var user = new User(body);
@@ -138,7 +139,7 @@ app.post('/users/login', (req, resp) => {
     resp.status(400).send();
   });
 })
-
+//--------------------User login-------------------------
 //-------------------User logout----------------------
 app.delete('/users/currentuser/logout',authenticate, (req, resp) => {
   req.user.removeToken(req.token).then(() => {

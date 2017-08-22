@@ -19,19 +19,20 @@ app.get('/users/currentuser',authenticate,(req, resp) => {
   resp.send(req.user);
 });
 
-//get all todos
-app.get('/todos',(req,resp) => {
-  Todo.find().then((todos) => {
+//------------------get all todos of a user------------------
+app.get('/todos',authenticate, (req,resp) => {
+  Todo.find({_userId : req.user._id}).then((todos) => {
     resp.send({todos});
   },(err) => {
     resp.status(400).send();
   });
 });
 
-//create new todo(s)
-app.post('/todos/new',(req, resp) => {
+//----------------create new todo(s)--------------------
+app.post('/todos/new', authenticate,(req, resp) => {
   var todo = new Todo({
-    text: req.body.text
+    text: req.body.text,
+    _userId: req.user._id
   });
 
   todo.save().then((doc) => {
@@ -42,30 +43,33 @@ app.post('/todos/new',(req, resp) => {
 
 });
 
-//get a single todo by id
-app.get('/todos/:id',(req,resp) => {
-  var id = req.params.id;
-  if (!ObjectID.isValid(id)) {
+//--------------get a single todo by id--------------
+app.get('/todos/:id', authenticate,(req,resp) => {
+  var _id = req.params.id;
+  if (!ObjectID.isValid(_id)) {
     return resp.status(404).send('Invalid ID!');
   }
 
-  Todo.findById(id).then((todo) => {
+  Todo.findOne({
+    _id,
+    _userId: req.user._id
+    }).then((todo) => {
     if (!todo) {
       return resp.status(404).send('Unable to find todo id');
     }
     resp.send({todo});
   }).catch((err) => {
-    resp.status(400).send();
+    resp.status(400).send(err);
   });
 
 });
 
-//Update a todo
-app.patch('/todos/:id',(req,resp) => {
-  var id = req.params.id;
+//-------------------Update a todo------------------------------
+app.patch('/todos/:id', authenticate, (req,resp) => {
+  var _id = req.params.id;
   var body = _.pick(req.body, ['text','completed']); //security
 
-  if (!ObjectID.isValid(id)) {
+  if (!ObjectID.isValid(_id)) {
     return resp.status(404).send();
   }
 
@@ -76,7 +80,10 @@ app.patch('/todos/:id',(req,resp) => {
     body.completedAt = null;
   }
 
-  Todo.findByIdAndUpdate(id, {$set: body}, {new:true}).then((todo) =>{
+  Todo.findOneAndUpdate({
+    _id,
+    _userId: req.user._id
+    }, {$set: body}, {new:true}).then((todo) =>{
     if (!todo) {
       console.log('hah');
       return resp.status(404).send();
@@ -89,14 +96,17 @@ app.patch('/todos/:id',(req,resp) => {
 
 });
 
-//remove a single todos
-app.delete('/todos/:id',(req, resp) => {
-  var id = req.params.id
-  if (!ObjectID.isValid(id)) {
+//----------------remove a single todos-----------------
+app.delete('/todos/:id',authenticate, (req, resp) => {
+  var _id = req.params.id
+  if (!ObjectID.isValid(_id)) {
     return resp.status(404).send("In valid ID");
   }
 
-  Todo.findByIdAndRemove(id).then((todo) => {
+  Todo.findOneAndRemove({
+    _id,
+    _userId: req.user._id
+    }).then((todo) => {
     if (!todo) {
       return resp.status(404).send('Todo not found');
     }

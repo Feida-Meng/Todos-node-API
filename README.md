@@ -1,21 +1,41 @@
 # Todos-node-API
 A todo list node API, my first node/express + MongoDB/Mongoose project.
 
-Create a user:          POST    https://todo-list-nodeapi.herokuapp.com/users/new + data
+-Create a user:          
+
+POST    https://todo-list-nodeapi.herokuapp.com/users/new + data
 
 ,e.g. {"email": "user@gmail.com", "password": "23412412rd"}
 
-Login:                  POST    https://todo-list-nodeapi.herokuapp.com/users/login
+-----------------------------------------------------------------------------------------------------
 
-Logout:                 DELETE  https://todo-list-nodeapi.herokuapp.com/users/currentuser/logout
+-Login:                  POST    https://todo-list-nodeapi.herokuapp.com/users/login + data
 
-Create a new todo:      POST    https://todo-list-nodeapi.herokuapp.com/todos/new
+,e.g. {"email": "user@gmail.com", "password": "23412412rd"}
+
+-----------------------------------------------------------------------------------------------------
+
+-Logout:                 DELETE  https://todo-list-nodeapi.herokuapp.com/users/currentuser/logout
+
+Create a new todo:      POST    https://todo-list-nodeapi.herokuapp.com/todos/new + data
+
+e.g. {"text": "Need to go to moon at 6pm"}
+
+-----------------------------------------------------------------------------------------------------
 
 Fetch all todo:         GET     https://todo-list-nodeapi.herokuapp.com/todos
 
+-----------------------------------------------------------------------------------------------------
+
 Fetch one todo by id:   GET     https://todo-list-nodeapi.herokuapp.com/todos/:id
 
-Update one todo by id:  PATCH   https://todo-list-nodeapi.herokuapp.com/todos/:id
+-----------------------------------------------------------------------------------------------------
+
+Update one todo by id:  PATCH   https://todo-list-nodeapi.herokuapp.com/todos/:id + data
+
+e.g. {"text": "Need to hunt aliens"}
+
+-----------------------------------------------------------------------------------------------------
 
 Delete one todo by id:  DELETE  https://todo-list-nodeapi.herokuapp.com/todos/:id
 

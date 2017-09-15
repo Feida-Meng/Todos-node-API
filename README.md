@@ -1,11 +1,8 @@
 # Todos-node-API
 A todo list node API, my first node/express + MongoDB/Mongoose project.
 
-Create a user:          POST    https://todo-list-nodeapi.herokuapp.com/users/new + body ,e.g. 
-{
-  "email": "vader4@gmail.com",
-  "password": "23412412rd"
-}
+Create a user:          POST    https://todo-list-nodeapi.herokuapp.com/users/new + body
+,e.g. {"email": "user@gmail.com", "password": "23412412rd"}
 
 Login:                  POST    https://todo-list-nodeapi.herokuapp.com/users/login
 

@@ -1,5 +1,5 @@
 # Todos-node-API
-A todo list node API, my first node/express project.
+A todo list node API, my first node/express + MongoDB/Mongoose project.
 
 Create a user:          POST    https://todo-list-nodeapi.herokuapp.com/users/new
 

@@ -1,7 +1,7 @@
 require("./config/config");
 
 const _ = require('lodash');
-var express = require('express');
+const express = require('express');
 var bodyParser = require('body-parser');
 var { ObjectID } = require('mongodb');
 
@@ -85,7 +85,7 @@ app.patch('/todos/:id', authenticate, (req,resp) => {
     _userId: req.user._id
     }, {$set: body}, {new:true}).then((todo) =>{
     if (!todo) {
-      console.log('hah');
+
       return resp.status(404).send();
     }
 
@@ -123,12 +123,10 @@ app.delete('/todos/:id',authenticate, (req, resp) => {
 app.post('/users/new', (req,resp) => {
   var body = _.pick(req.body, ['email','password']);
   var user = new User(body);
-  console.log('user1: ', user);
+
   user.save().then((user) => {
-    console.log('user2: ', user);
     return user.generateAuthToken();
   }).then(( token) => {
-    console.log('user3: ', user);
     resp.status(200).header('x-auth',token).send(user);
   }).catch((err) => {
     resp.status(400).send(err);
@@ -153,8 +151,6 @@ app.post('/users/login', (req, resp) => {
 //-------------------User logout----------------------
 app.delete('/users/currentuser/logout',authenticate, (req, resp) => {
   req.user.removeToken(req.token).then(() => {
-    console.log('req-------------',req.route.Route);
-    console.log('req-------------');
     resp.status(200).send();
   },() => {
     resp.status(400).send();

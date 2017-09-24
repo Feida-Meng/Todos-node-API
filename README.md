@@ -3,23 +3,23 @@ A todo list node API, my first node/express + MongoDB/Mongoose project.
 
 -Create a user:          
 
-POST    https://todo-list-nodeapi.herokuapp.com/users/new + data
+POST    https://todo-list-nodeapi.herokuapp.com/users/new
 
-,e.g. {"email": "user@gmail.com", "password": "23412412rd"}
+request body: {"email": "user@gmail.com", "password": "23412412rd"}
 
 -----------------------------------------------------------------------------------------------------
 
--Login:                  POST    https://todo-list-nodeapi.herokuapp.com/users/login + data
+-Login:                  POST    https://todo-list-nodeapi.herokuapp.com/users/login
 
-,e.g. {"email": "user@gmail.com", "password": "23412412rd"}
+request body: {"email": "user@gmail.com", "password": "23412412rd"}
 
 -----------------------------------------------------------------------------------------------------
 
 -Logout:                 DELETE  https://todo-list-nodeapi.herokuapp.com/users/currentuser/logout
 
-Create a new todo:      POST    https://todo-list-nodeapi.herokuapp.com/todos/new + data
+Create a new todo:      POST    https://todo-list-nodeapi.herokuapp.com/todos/new
 
-e.g. {"text": "Need to go to moon at 6pm"}
+request body: {"text": "Need to go to moon at 6pm"}
 
 -----------------------------------------------------------------------------------------------------
 
@@ -31,9 +31,9 @@ Fetch one todo by id:   GET     https://todo-list-nodeapi.herokuapp.com/todos/:i
 
 -----------------------------------------------------------------------------------------------------
 
-Update one todo by id:  PATCH   https://todo-list-nodeapi.herokuapp.com/todos/:id + data
+Update one todo by id:  PATCH   https://todo-list-nodeapi.herokuapp.com/todos/:id
 
-e.g. {"text": "Need to hunt aliens"}
+request body: {"text": "Need to hunt aliens"}
 
 -----------------------------------------------------------------------------------------------------
 
